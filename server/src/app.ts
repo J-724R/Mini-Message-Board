@@ -15,12 +15,8 @@ const app = express();
 app.use(cors({origin: "*"}));
 app.use(express.json());
 
-// app.use('/', (req, res) =>{
-//   return res.send('Hellow world')
-// })
-
 // Test 1
-app.use("/Dog", createDogController)
+app.post("/Dog", createDogController)
 
 
 

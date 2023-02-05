@@ -3,13 +3,13 @@ import Dog from "../models/Dog";
 
 export async function createDogController( req: Request, res: Response) {
   const newDog = new Dog({
-    name: "Ryuk",
-    age: 7,
-    breed: "Mix",
+    name: req.body.name,
+    age: req.body.age,
+    breed: req.body.breed,
   })
   
   const createdDog = await newDog.save();
 
   console.log(createdDog);
-  return res.send(createdDog)
+  return res.json(createdDog)
 }
