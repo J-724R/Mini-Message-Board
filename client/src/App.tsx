@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
+import DogForm from './components/dogForm';
 import './App.css'
+import { getDogs, createDog } from './api/dog';
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:4000";
 
@@ -22,57 +24,14 @@ function App() {
   });
     
 
-
-
-
-
-  const perros = async function getDogs(): Promise<TDogs[]> {
-    const response = await fetch(`${API_URL}/Dogs`);
-    return response.json();
-  }
-
   useEffect(() => {
     async function fetchDog() {
-      const Dogs = await perros();
+      const Dogs = await getDogs();
       setDogs(Dogs);
       console.log(Dogs);
     }
     fetchDog()
   }, [dogDB]);
-
-
-
-
-
-
-
-
-  async function createDog(name: string, age: number, breed: string) {
-    const response = await fetch(`${API_URL}/Dog`, {
-      method: "POST",
-      body: JSON.stringify({
-        name,
-        age,
-        breed
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return response.json();
-  }
-
-  async function handleCreateDog(e: React.FormEvent) {
-    e.preventDefault();
-    const newDog = await createDog(dog.name, Number(dog.age), dog.breed);
-    setDogDb({...dogs, newDog});
-    setDog({
-      name: "",
-      age: "",
-      breed: ""
-    });
-  }
-
 
   return (
     <>
@@ -83,8 +42,16 @@ function App() {
             {`${dog.name}`}
           </div>
         ))}
+
       </div>
-      <form onSubmit={handleCreateDog}>
+      
+      <DogForm 
+        dogDb = {dogDB}
+        setDogDB = {setDogDb}
+      />
+
+
+      {/* <form onSubmit={handleCreateDog}>
         <label htmlFor="dog-name">Dog Name: </label>
         <input
           id="dog-name"
@@ -110,7 +77,7 @@ function App() {
           }}
         />
         <button>Create Deck</button>
-      </form>
+      </form> */}
     </>
   )
 }

@@ -6,6 +6,7 @@ export async function createDogController( req: Request, res: Response) {
     name: req.body.name,
     age: req.body.age,
     breed: req.body.breed,
+    bio: req.body.bio
   })
   
   const createdDog = await newDog.save();
